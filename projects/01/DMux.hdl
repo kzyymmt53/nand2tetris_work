@@ -9,10 +9,23 @@
  *          {0, in} if sel == 1
  */
 
+// a = in * not sel
+// b = in * sel
 CHIP DMux {
     IN in, sel;
     OUT a, b;
 
     PARTS:
     // Put your code here:
+    // not sel
+    Nand(a=sel, b=sel, out=notsel);
+
+    //in * not sel
+    Nand(a=in, b=notsel, out=innandnotsel);
+    Nand(a=innandnotsel, b=innandnotsel, out=a);
+
+    //in * sel
+    Nand(a=in, b=sel, out=innandsel);
+    Nand(a=innandsel, b=innandsel, out=b);
+
 }
