@@ -9,10 +9,22 @@
  *       b otherwise
  */
 
+// not sel * a + sel * b
 CHIP Mux {
     IN a, b, sel;
     OUT out;
 
     PARTS:
-    // Put your code here:
+    
+    // not sel
+    Nand(a=sel, b=sel, out=notsel);
+    
+    // anandnotsel = a nand not sel
+    Nand(a=a, b=notsel, out=anandnotsel);
+
+    // bnandsel = b nand sel
+    Nand(a=b, b=sel, out=bnandsel);
+
+    // anandnotsel || notbnandsel 
+    Nand(a=anandnotsel, b=bnandsel, out=out);
 }
